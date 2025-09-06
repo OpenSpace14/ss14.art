@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="https://i.postimg.cc/QMgXhqnY/icon.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Space</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            cursor: url(images/cursor/cursor.png), auto;
+        }
+        
+        body {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .parallax-bg-1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.postimg.cc/7YPKq1ms/enhanced-parallax-cache.png');
+            background-size: auto;
+            background-position: center;
+            opacity: 0.5;
+            z-index: -2;
+            pointer-events: none;
+        }
+        
+        .parallax-bg-2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.postimg.cc/26VrhfSM/parallax-hq-wizard-stars-fastercache.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .main-logo {
+            max-width: 100%;
+            max-height: 300px;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+        
+        .card {
+            background-color: #2d2d2d;
+            border: 1px solid #555;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+        
+        p {
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        .connection-section {
+            margin-bottom: 30px;
+        }
+        
+        .direct-connect {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #3a3a3a;
+            border: 1px solid #666;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .direct-connect:hover {
+            background-color: #4a4a4a;
+            transform: translateY(-2px);
+            cursor: url(images/cursor/pointer.png), auto;
+        }
+        
+        .icon {
+            width: 64px;
+            height: 64px;
+            margin-right: 20px;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+        
+        .connect-info h3 {
+            margin-bottom: 5px;
+            color: #ffffff;
+            font-size: 16px;
+        }
+        
+        .connect-info p {
+            color: #66aaff;
+            font-size: 14px;
+            margin: 0;
+            word-break: break-all;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .link-btn {
+            display: block;
+            padding: 15px;
+            background-color: #3a3a3a;
+            border: 1px solid #666;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: #77aaff;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .link-btn-d {
+            display: block;
+            padding: 15px;
+            background-color: #3a3a3a;
+            border: 1px solid #666;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: #77ccc8;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .link-btn-w {
+            display: block;
+            padding: 15px;
+            background-color: #3a3a3a;
+            border: 1px solid #666;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: #ccbf77;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .link-btn-d:hover {
+            background-color: #4a4a4a;
+            color: #ccfaf8;
+            transform: translateY(-2px);
+            cursor: url(images/cursor/pointer.png), auto;
+        }
+
+        .link-btn-w:hover {
+            background-color: #4a4a4a;
+            color: #f0e9c0;
+            transform: translateY(-2px);
+            cursor: url(images/cursor/pointer.png), auto;
+        }
+        
+        .how-to-play {
+            display: block;
+            padding: 15px;
+            background-color: #3a3a3a;
+            border: 1px solid #666;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: #77cc77;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .how-to-play:hover {
+            background-color: #4a4a4a;
+            color: #aaffaa;
+            transform: translateY(-2px);
+            cursor: url(images/cursor/pointer.png), auto;
+        }
+        
+        .footer-logo {
+            display: block;
+            margin: 30px auto 0;
+            width: 200px;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .notification.show {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .direct-connect {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Static background layer -->
+    <div class="parallax-bg-1"></div>
+    
+    <!-- Moving stars layer -->
+    <div class="parallax-bg-2" id="parallax2"></div>
+    
+    <div class="notification" id="notification">Скопировано в буфер обмена!</div>
+    
+    <div class="container">
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/WphQ7nwR/image.png" alt="Open Space Logo" class="main-logo" draggable="false">
+        </div>
+        
+        <div class="card">
+            <h1>Добро пожаловать в мир Space Station 14!</h1>
+            <p>Погрузитесь в захватывающий мир космической станции, где каждая сменя приносит новые приключения, интриги и вызовы. Присоединяйтесь к нашему дружному сообществу игроков и создайте свою уникальную историю в бескрайнем космосе!</p>
+            
+            <div class="connection-section">
+                <div class="direct-connect" id="copyButton">
+                    <img src="https://i.postimg.cc/QMgXhqnY/icon.png" alt="Icon" class="icon" draggable="false">
+                    <div class="connect-info">
+                        <h3>Прямое подключение (нажмите для копирования)</h3>
+                        <p>ss14://85.192.48.38:1212/</p>
+                    </div>
+                </div>
+                
+                <div class="links-grid">
+                    <a href="https://discord.gg/cncwdkTWRK" target="_blank" class="link-btn-d">Discord сервер</a>
+                    <a href="https://wiki.ss14.art/" target="_blank" class="link-btn-w">Вики сервера</a>
+                </div>
+                
+                <a href="https://wiki.ss14.art/wiki/How_to_start_playing" target="_blank" class="how-to-play">Как начать играть</a>
+            </div>
+            
+            <img src="https://i.postimg.cc/BnGk4G9s/1984.png" alt="Open Space Text" class="footer-logo" draggable="false">
+        </div>
+    </div>
+    
+    <script>
+        // Mouse movement parallax effect for the stars layer
+        document.addEventListener('mousemove', function(e) {
+            const parallax2 = document.getElementById('parallax2');
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            
+            // Calculate the movement based on mouse position
+            const moveX = (x - 50) * 0.5; // 0.5 is the sensitivity multiplier
+            const moveY = (y - 50) * 0.5;
+            
+            // Apply the transformation to create the parallax effect
+            parallax2.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+        
+        // Scroll parallax effect for the static background
+        window.addEventListener('scroll', function() {
+            const parallax1 = document.querySelector('.parallax-bg-1');
+            const scrollPosition = window.scrollY;
+            
+            // Move the static background with scrolling
+            parallax1.style.transform = `translateY(${scrollPosition * 0.3}px)`;
+        });
+        
+        // Copy to clipboard functionality
+        document.getElementById('copyButton').addEventListener('click', function() {
+            navigator.clipboard.writeText('ss14://85.192.48.38:1212/')
+                .then(() => {
+                    const notification = document.getElementById('notification');
+                    notification.classList.add('show');
+                    
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+        });
+    </script>
+</body>
+</html>
