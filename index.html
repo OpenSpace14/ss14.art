@@ -5,7 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Open Space</title>
   <link rel="icon" href="https://i.postimg.cc/QMgXhqnY/icon.png" type="image/x-icon" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <!-- Подключаем локальные шрифты -->
+  <style>
+    @font-face {
+      font-family: 'Widock';
+      src: url('Resources/Fonts/Widock/Widock.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'UbuntuSansMono';
+      src: url('Resources/Fonts/Ubuntu/UbuntuSansMonoNerdFont-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
   <style>
     :root{
       --bg:#0f1013;
@@ -25,88 +39,86 @@
       --radius: 8px;
       --radius-lg: 12px;
     }
-
     *{box-sizing:border-box; user-select:none; cursor: url(images/cursor/cursor.png), auto;}
     html,body{height:100%; margin:0;}
     body{
-      font-family: 'Orbitron', 'Share Tech Mono', system-ui, sans-serif;
+      font-family: 'UbuntuSansMono', monospace;
       color:var(--text);
       background: var(--bg);
       overflow:hidden;
     }
-
-    /* Анимированный фон (звёзды + линии) */
-    .space-bg{
-      position:fixed; inset:0; z-index:-2; overflow:hidden; background:radial-gradient(circle at 50% 50%, #10121a 0%, #0a0b10 100%);
-    }
-    .stars{
-      width:2px; height:2px; background:white; position:absolute; border-radius:50%; opacity:.8;
-      animation: twinkle 3s infinite ease-in-out;
-    }
-    @keyframes twinkle{
-      0%,100%{opacity:.2; transform:scale(1);} 
-      50%{opacity:1; transform:scale(1.6);} 
-    }
-
-    .lines{
-      position:absolute; width:2px; height:40px; background:linear-gradient(to bottom, rgba(102,170,255,.9), transparent);
-      animation: fall 3s linear infinite;
-    }
-    @keyframes fall{
-      0%{transform:translateY(-50px);} 100%{transform:translateY(110vh);} 
-    }
-
-    /* === Окно === */
+    .title, h1{ font-family:'Widock', sans-serif; }
+    p, .btn, .connect .addr{ font-family:'UbuntuSansMono', monospace; }
+    .space-bg{position:fixed; inset:0; z-index:-2; overflow:hidden; background:radial-gradient(circle at 50% 50%, #10121a 0%, #0a0b10 100%);}
+    .stars{width:2px; height:2px; background:white; position:absolute; border-radius:50%; opacity:.8; animation: twinkle 3s infinite ease-in-out;}
+    @keyframes twinkle{0%,100%{opacity:.2; transform:scale(1);} 50%{opacity:1; transform:scale(1.6);} }
+    .lines{position:absolute; width:2px; height:40px; background:linear-gradient(to bottom, rgba(102,170,255,.9), transparent); animation: fall 3s linear infinite;}
+    @keyframes fall{0%{transform:translateY(-50px);} 100%{transform:translateY(110vh);} }
     .app{ max-width: 1100px; margin: 32px auto; padding: 0 16px; position:relative; z-index:1; }
     .window{ background:var(--panel); border-radius: var(--radius-lg); box-shadow: var(--shadow); position:relative; }
     .window::before{ content:""; position:absolute; inset:0; border-radius: var(--radius-lg); border-top:2px solid var(--bevel-hi); border-left:2px solid var(--bevel-hi); border-bottom:2px solid var(--bevel-lo); border-right:2px solid var(--bevel-lo); opacity:.9; pointer-events:none; }
-
     .titlebar{ display:flex; align-items:center; justify-content:space-between; padding:10px 12px; background:linear-gradient(#202436,#161a24); border-top-left-radius: var(--radius-lg); border-top-right-radius: var(--radius-lg); border-bottom:1px solid #0e1119; }
-    .title{ display:flex; align-items:center; gap:10px; font-weight:700; color:#e9eeff; letter-spacing:1px; text-transform:uppercase; font-family:'Orbitron', sans-serif; }
+    .title{ display:flex; align-items:center; gap:10px; font-weight:700; color:#e9eeff; letter-spacing:1px; text-transform:uppercase; font-family:'Widock', sans-serif; }
     .title img{ width:24px; height:24px; filter: drop-shadow(0 0 6px rgba(102,170,255,.7)); }
     .window-controls{ display:flex; gap:6px; }
     .win-btn{ width:14px; height:14px; border-radius:3px; background:#2b3040; border:1px solid #0a0c12; box-shadow: inset 0 1px 0 #3b4561; }
     .win-btn.close{ background: linear-gradient(#a33, #742626); }
     .win-btn.min{ background: linear-gradient(#a78f34, #6a5b24); }
     .win-btn.max{ background: linear-gradient(#2e8d52, #1f5f38); }
-
     .content{ display:grid; grid-template-columns: 260px 1fr; gap:16px; padding:16px; }
     .panel{ background:var(--panel-alt); border-radius:var(--radius); padding:12px; position:relative; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
     .panel::before{ content:""; position:absolute; inset:0; border-radius:var(--radius); border-top:2px solid var(--bevel-hi); border-left:2px solid var(--bevel-hi); border-bottom:2px solid var(--bevel-lo); border-right:2px solid var(--bevel-lo); opacity:.8; pointer-events:none; }
-
     .section-title{ font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.12em; margin-bottom:10px; }
     .nav{ display:flex; flex-direction:column; gap:10px; }
-
-    .btn{ display:flex; align-items:center; justify-content:center; height:40px; font-weight:700; text-decoration:none; color:var(--text); background: linear-gradient(#2a2f42, #1f2332); border:1px solid #0c0f18; border-radius:6px; transition: transform .1s ease, filter .2s ease; font-family:'Share Tech Mono', monospace; }
+    .btn{ display:flex; align-items:center; justify-content:center; height:40px; font-weight:700; text-decoration:none; color:var(--text); background: linear-gradient(#2a2f42, #1f2332); border:1px solid #0c0f18; border-radius:6px; transition: transform .1s ease, filter .2s ease; font-family:'UbuntuSansMono', monospace; position: relative; overflow: hidden; }
     .btn:hover{ filter:brightness(1.2); cursor: url(images/cursor/pointer.png), auto; }
     .btn:active{ transform: translateY(1px); }
     .btn.accent{ background: linear-gradient(#3a5ea8, #2b447a); }
     .btn.alt{ background: linear-gradient(#387a3e, #2a5a2f); }
     .btn.warn{ background: linear-gradient(#8a7a33, #5e5224); }
-
     .stage{ display:flex; flex-direction:column; gap:16px; }
     .card{ background:var(--panel-alt); border-radius:var(--radius); padding:16px; position:relative; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
     .card::before{ content:""; position:absolute; inset:0; border-radius:var(--radius); border-top:2px solid var(--bevel-hi); border-left:2px solid var(--bevel-hi); border-bottom:2px solid var(--bevel-lo); border-right:2px solid var(--bevel-lo); opacity:.85; pointer-events:none; }
-
-    h1{ font-size:22px; font-family:'Orbitron', sans-serif; letter-spacing:1px; margin-bottom:10px; }
-    p{ font-family:'Share Tech Mono', monospace; font-size:15px; color:#c9d3ff; line-height:1.6; }
-
+    h1{ font-size:20px; font-family:'Widock', sans-serif; letter-spacing:1px; margin-bottom:10px; }
+    p{ font-family:'UbuntuSansMono', monospace; font-size:15px; color:#c9d3ff; line-height:1.6; }
     .connect{ display:flex; align-items:center; gap:12px; padding:12px; border-radius:6px; background:linear-gradient(90deg, rgba(102,170,255,.1), transparent 60%); border:1px dashed #2b3a59; }
     .connect:hover{ background:linear-gradient(90deg, rgba(102,170,255,.18), transparent 60%); }
     .connect .icon{ width:48px; height:48px; filter: drop-shadow(0 0 6px rgba(102,170,255,.6)); }
-    .connect .addr{ font-family:'Share Tech Mono', monospace; font-size:14px; color:var(--accent); word-break:break-all; }
+    .connect .addr{ font-family:'UbuntuSansMono', monospace; font-size:14px; color:var(--accent); word-break:break-all; }
     .copy{ margin-left:auto; display:flex; align-items:center; }
     .copy .btn{ height:36px; padding:0 10px; font-size:14px; }
-
     .toast{ position:fixed; top:18px; left:50%; transform:translateX(-50%); background:linear-gradient(#305a3f,#244432); border:1px solid #0c140f; color:#eafff3; padding:10px 14px; border-radius:6px; box-shadow: var(--shadow); opacity:0; pointer-events:none; transition: opacity .2s ease; z-index:1000; }
     .toast.show{ opacity:1; }
-
+    .status{ display:flex; align-items:center; justify-content:space-between; margin:10px 0; padding:12px; border-radius:6px; background:linear-gradient(90deg, rgba(63,185,129,.1), transparent 60%); border:1px dashed #2b5945; }
+    .status-indicator{ width:12px; height:12px; border-radius:50%; margin-right:8px; }
+    .online .status-indicator{ background:#3fb981; box-shadow:0 0 6px #3fb981; }
+    .offline .status-indicator{ background:#d4686a; box-shadow:0 0 6px #d4686a; }
+    
+    /* Стили для эмоджи-эффектов */
+    .emoji-effect {
+      position: absolute;
+      font-size: 24px;
+      pointer-events: none;
+      z-index: 1000;
+      animation: emojiFall 2s forwards;
+    }
+    
+    @keyframes emojiFall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
     @media(max-width:900px){ .content{ grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
   <div class="space-bg" id="space"></div>
-
   <div class="app">
     <div class="window">
       <div class="titlebar">
@@ -116,7 +128,6 @@
         </div>
         <div class="window-controls"><div class="win-btn min"></div><div class="win-btn max"></div><div class="win-btn close"></div></div>
       </div>
-
       <div class="content">
         <aside class="panel">
           <div class="section-title">Навигация</div>
@@ -126,24 +137,31 @@
             <a class="btn alt" href="https://wiki.ss14.art/wiki/How_to_start_playing" target="_blank">Как начать играть</a>
           </nav>
         </aside>
-
         <main class="stage">
           <section class="card">
             <h1>Добро пожаловать в мир Space Station 14!</h1>
             <p>Каждая смена — новые роли, интриги и истории. Врывайся и создай свою легенду. Встретимся в космосе!</p>
           </section>
-
           <section class="card">
             <div class="connect">
               <img class="icon" src="https://i.postimg.cc/QMgXhqnY/icon.png" alt="server" />
               <div>
-                <div style="font-weight:700; margin-bottom:2px;">Прямое подключение</div>
+                <div style="font-weight:700; margin-bottom:2px; font-family:'Widock'" id="serverName">Прямое подключение</div>
                 <div class="addr">ss14://85.192.48.38:1212/</div>
               </div>
               <div class="copy"><button id="copyBtn" class="btn accent">Скопировать</button></div>
             </div>
+            <div id="serverStatus" class="status offline">
+              <div style="display:flex; align-items:center;">
+                <div class="status-indicator"></div>
+                <span id="statusText">Проверка...</span>
+              </div>
+              <span id="players">Игроков: 0</span>
+            </div>
+            <p><b>Карта:</b> <span id="map">—</span></p>
+            <p><b>Режим:</b> <span id="preset">—</span></p>
+            <p><b>Раунд:</b> <span id="round">—</span></p>
           </section>
-
           <section class="card" style="display:flex; justify-content:center;">
             <img src="https://i.postimg.cc/BnGk4G9s/1984.png" alt="Open Space" style="width:220px; max-width:100%;" />
           </section>
@@ -151,9 +169,7 @@
       </div>
     </div>
   </div>
-
   <div id="toast" class="toast">Скопировано в буфер обмена!</div>
-
   <script>
     const copyBtn = document.getElementById('copyBtn');
     const toast = document.getElementById('toast');
@@ -164,8 +180,71 @@
         setTimeout(()=>toast.classList.remove('show'),1800);
       }catch(e){console.error(e)}
     });
-
-    // Генерация звёзд и линий
+    
+    // Функция для создания эффекта падающих эмоджи
+    function createEmojiEffect(event) {
+      const emojis = ['🚀', '🛸', '👽', '🌟', '🌌', '⭐', '🔭', '👾'];
+      const buttonRect = event.currentTarget.getBoundingClientRect();
+      const emojiCount = 5; // Количество эмоджи
+      
+      for (let i = 0; i < emojiCount; i++) {
+        const emoji = document.createElement('div');
+        emoji.className = 'emoji-effect';
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        
+        // Позиционируем эмоджи относительно кнопки
+        const xPos = Math.random() * buttonRect.width;
+        emoji.style.left = `${buttonRect.left + xPos}px`;
+        emoji.style.top = `${buttonRect.top}px`;
+        
+        // Добавляем небольшую случайность в анимацию
+        const duration = 1 + Math.random() * 1.5;
+        emoji.style.animation = `emojiFall ${duration}s forwards`;
+        
+        document.body.appendChild(emoji);
+        
+        // Удаляем элемент после завершения анимации
+        setTimeout(() => {
+          if (emoji.parentNode) {
+            emoji.parentNode.removeChild(emoji);
+          }
+        }, duration * 1000);
+      }
+    }
+    
+    // Добавляем обработчики событий для всех кнопок
+    document.querySelectorAll('.btn').forEach(button => {
+      button.addEventListener('click', createEmojiEffect);
+    });
+    
+    async function fetchStatus(){
+      try{
+        const res = await fetch('http://85.192.48.38:1212/status');
+        const data = await res.json();
+        document.getElementById('serverName').textContent = data.name;
+        document.getElementById('map').textContent = data.map;
+        document.getElementById('preset').textContent = data.preset;
+        document.getElementById('round').textContent = data.round_id;
+        const statusEl=document.getElementById('serverStatus');
+        const statusText=document.getElementById('statusText');
+        const players=document.getElementById('players');
+        statusEl.classList.remove('offline');
+        statusEl.classList.add('online');
+        statusText.textContent='Сервер онлайн';
+        players.textContent='Игроков: '+data.players+' / '+data.soft_max_players;
+      }catch(err){
+        console.error(err);
+        const statusEl=document.getElementById('serverStatus');
+        const statusText=document.getElementById('statusText');
+        const players=document.getElementById('players');
+        statusEl.classList.remove('online');
+        statusEl.classList.add('offline');
+        statusText.textContent = 'Ошибка подключения';
+        players.textContent='Игроков: 0';
+      }
+    }
+    fetchStatus();
+    setInterval(fetchStatus, 10000);
     const space=document.getElementById('space');
     for(let i=0;i<100;i++){
       const star=document.createElement('div');
