@@ -165,7 +165,7 @@
     const toast = document.getElementById('toast');
     copyBtn.addEventListener('click', async()=>{
       try{
-        await navigator.clipboard.writeText('ss14://85.192.48.38:1212/');
+        await navigator.clipboard.writeText('ss14://play.ss14.art/');
         toast.classList.add('show');
         setTimeout(()=>toast.classList.remove('show'),1800);
       }catch(e){console.error(e)}
